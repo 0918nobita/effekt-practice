@@ -1,0 +1,23 @@
+module effExample
+
+effect Yield(n: Int): Boolean
+
+def yieldNums() = {
+    var continueProducing = true;
+    var num = 0;
+
+    while (continueProducing) {
+        continueProducing = do Yield(num);
+
+        num = num + 1;
+    }
+}
+
+def main() = {
+    try {
+        yieldNums()
+    } with Yield { num =>
+        println(num);
+        resume(num < 3);
+    }
+}
