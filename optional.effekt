@@ -1,0 +1,27 @@
+module optional
+
+type Option[T] {
+    None();
+    Some(value: T)
+}
+
+def mapOption[T, U](opt: Option[T]) { f: T => U }: Option[U] =
+    opt match {
+        case None() => None();
+        case Some(x) => Some(f(x));
+    }
+
+def bindOption[T, U](opt: Option[T]) { f: T => Option[U] }: Option[U] =
+    opt match {
+        case None() => None();
+        case Some(x) => f(x);
+    }
+
+def foo(): Option[Int] / Console =
+    mapOption(Some(7)) { x => println("test"); x * 2 }
+
+def main() = {
+    foo()
+        .bindOption { x => Some(x + 4) }
+        .println
+}
