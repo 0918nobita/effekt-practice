@@ -1,0 +1,20 @@
+module division
+
+effect DivideByZero(): Unit
+
+def div(x: Int, y: Int): Int / { DivideByZero } =
+    if (y == 0) {
+        do DivideByZero(); 0
+    } else {
+        x / y
+    }
+
+def main() = {
+    try {
+        println(div(6, 2))
+        println(div(7, 0))
+        println("Unreachable")
+    } with DivideByZero {
+        println("divide by zero")
+    }
+}
